@@ -1,0 +1,11 @@
+"AddonInfo"
+{
+	"name"				"PLib" 
+	"version"			"1.1"
+	"author_name"		"Phoenixf129"
+	"author_email"		"phoenixf129@gmail.com"
+	"author_url"		"cybergmod.net"
+	"info"				"MySQLoo Wrapper"
+}
+
+
