@@ -4,14 +4,13 @@
 -- TMySQL4 can be found at: http://facepunch.com/showthread.php?t=1442438
 -- MySQLOO can be found at: http://facepunch.com/showthread.php?t=1357773
 
--- Always room for sanity checking :)
-PLib = {
+PLib = PLib or {
 	Host = "xxx", -- Hostname or IP Address to connect to
 	User = "xxx", -- Username to connect with
 	Pass = "xxx", -- Password to connect with
 	DBName = "xxx", -- Database to select
 	Port = 3306, -- Port to connect through. Default 3306.
-	DBModule = "mysqloo"
+	DBModule = "mysqloo", -- tmysql4 is also supported.
 }
 
 file.CreateDir("plib")
@@ -21,13 +20,17 @@ if !file.Exists("plib/config.txt", "DATA") then
 else
 	local config = util.JSONToTable(file.Read("plib/config.txt", "DATA"))
 	PLib = config
+	
+	PLib.MySQL = PLib.MySQL or {}
+	PLib.QueryQueue = PLib.QueryQueue or {}
+	
 	PLib.DBModule = config.DBModule or "mysqloo"
+	
+	PLib.MySQLActive = PLib.MySQLActive or false -- Don't touch this. PLib Changes this when mysql is connected.
+	PLib.DebugMode = PLib.DebugMode or false -- Problems? Turn this on to see the Queries being executed in your console.
+	
 	Msg("[PLib] Config file found and loaded!\n")
 end
-PLib.MySQL = {}
-PLib.QueryQueue = {}
-PLib.MySQLActive = false -- Don't touch this. PLib Changes this when mysql is connected.
-PLib.DebugMode = false -- Problems? Turn this on to see the Queries being executed in your console.
 
 function PLib:Init()
 	MsgN( "[PLib] Connecting to database.." )
